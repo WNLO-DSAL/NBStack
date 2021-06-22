@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ $1x = "n"x ]; then
+	EXECCMD=mountnobarrier
+	EXINFO="nobarrier mode"
+else
+	EXECCMD=mountnbfs
+	EXINFO="normal mode"
+fi
+echo "Removing nbfs"
+nbstackroot=`cat /tmp/nbstack/nbstack_root`
+cd ${nbstackroot}/src/nbfs
+./remove 
+echo "Discarding qblkdev"
+blkdiscard /dev/qblkdev 
+sleep 10
+echo "Formatting qblkdev"
+cd ../qblk
+./makef2fs
+echo "Rebuilding nbfs"
+cd ../nbfs
+make clean
+make -j16
+echo "Installing nbfs"
+./install
+echo "Mounting NBFS as "$EXINFO
+./$EXECCMD
+echo "done"

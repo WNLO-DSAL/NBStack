@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Loading configurations"
+source config
+
+mkdir -p $RESULTPREFIX
+mkdir -p $CMPPREFIX
+
+rm -f $RESULTPREFIX/*
+rm -f $CMPPREFIX/*
+
+echo "Preparing for the test"
+for (( i=0;i<$njob;i++ ));
+do
+	./tools/createDB $i &
+	pids[$i]=$!
+done
+
+for pid in ${pids[*]};
+do
+	wait $pid
+done
+
+echo "Done"

@@ -1,0 +1,40 @@
+#Number of concurrent jobs
+njob=16
+
+#Number of rows to insert for each job
+nrows=32000
+
+#Each table is defined as (long, char[$datasize])
+datasize=64
+
+# Set test engine.
+# Current supported engines:
+# 	C
+# 	Shell
+SQLEngine=C
+
+# CPUbind=0: don't bind CPU
+# CPUbind=1: bind CPU for each job
+CPUBind=0
+
+# POSTSYNC: whether to issue sync after test.
+POSTSYNC=0
+
+# Sync mode for C engine
+# FSYNC: fsync mode (strong durability guarantee)
+# DATASYNC: fdatasync mode (relaxed durability guarantee)
+# NONE: no sync(Currently not supported)
+syncmode=DATASYNC
+
+#Where to store your database files
+DBPrefix="/mnt/qhw/Insert"
+
+#Where to store results
+RESULTPREFIX=".res/"
+
+#Where to store memory allocation timing results
+CMPPREFIX=".cmp/"
+
+#sqlite3 binary
+SQLITE=/mnt/sdb/sqlite/bld/sqlite3
+

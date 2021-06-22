@@ -1,0 +1,44 @@
+#!/bin/bash
+
+source config
+
+TPF1=./.__tmpf1__
+TPF2=./.__tmpf2__
+
+cmpFiles=`ls ${CMPPREFIX}*`
+resFiles=`ls ${RESULTPREFIX}*`
+
+echo "" > $TPF1
+echo "" > $TPF2
+
+for rf in $resFiles;
+do
+cat $rf >> $TPF1
+done
+
+for cmp in $cmpFiles;
+do
+cat $cmp >> $TPF2
+done
+
+
+./tools/collect_awk -F'[sm \t]' $TPF2 > .average_allocSec
+./tools/collect_awk -F'[sm \t]' $TPF1 > .average_runTime
+
+average_allocSec=`cat .average_allocSec`
+average_runTime=`cat .average_runTime`
+{ echo $average_runTime"-"$average_allocSec | bc; } > .sql_time
+average_sqlTime=`cat .sql_time`
+
+rm -f .average_allocSec .average_runTime .sql_time
+
+echo "----------------------------------------------------"
+echo "Average time for allocation (in seconds): "$average_allocSec
+echo "Average running time (in seconds): "$average_runTime
+echo "SQL time (in seconds): "$average_sqlTime
+echo "----------------------------------------------------"
+
+rm -f $TPF1
+rm -f $TPF2
+
+

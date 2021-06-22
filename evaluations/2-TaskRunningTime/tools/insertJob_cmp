@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#
+# IMPORTANT: Any modification to this file should also do against "insertJob"
+#
+
+source config
+
+DB=$DBPrefix$1".db"
+
+#Prepare data
+data=""
+d128="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+__dsize=$datasize
+while [ $__dsize -ge 128 ]
+do
+        __dsize=$(($__dsize-128))
+        data+=$d128
+done
+for (( j=0;j<$__dsize;j++ ));
+do
+  data+="x"
+done
+
+

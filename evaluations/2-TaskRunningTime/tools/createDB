@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source config
+
+DB=$DBPrefix$1".db"
+
+#Delete DB if exists
+if [ -f $DB ] ;
+then
+  rm -f $DB;
+fi
+
+#Create Table
+echo "CREATE TABLE tbl (id long, data varchar("$datasize"));" | \
+	$SQLITE $DB
+

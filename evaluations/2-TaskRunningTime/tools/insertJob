@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#
+# IMPORTANT: Any modification to this file should also do against "insertJob_cmp"
+#
+
+source config
+
+DB=$DBPrefix$1".db"
+
+#Prepare data
+data=""
+d128="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+__dsize=$datasize
+while [ $__dsize -ge 128 ]
+do
+        __dsize=$(($__dsize-128))
+        data+=$d128
+done
+for (( j=0;j<$__dsize;j++ ));
+do
+  data+="x"
+done
+
+
+# Insert rows into the table
+for (( i=0; i<$nrows; i++ ));
+do
+  echo "INSERT INTO tbl VALUES ("$i",\""$data"\");" |\
+        $SQLITE $DB
+done
+
+

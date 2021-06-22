@@ -1,0 +1,4 @@
+#!/bin/bash
+
+./mobibench -q -p /mnt/qhw -y 0 -t 2 -d $1 -n 10000 -j $2 -s $3
+

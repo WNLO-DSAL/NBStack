@@ -1,0 +1,19 @@
+#!/bin/awk -f
+
+BEGIN {
+totalm=0;
+totals=0;
+count=0;
+}
+
+/real/ {
+totalm+=$2;
+totals+=$3;
+count++;
+}
+
+END {
+print (totalm*60+totals)/count
+}
+
+

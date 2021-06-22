@@ -1,0 +1,26 @@
+echo "Start comparison test"
+for (( i=0;i<$njob;i++ ));
+do
+        { time ./tools/insertJob_cmp $i; } 2>${CMPPREFIX}${i}.res &
+        pids1[${i}]=$!
+done
+
+for pid1 in ${pids1[*]}; do
+    wait $pid1
+done
+
+echo "Done comparison test"
+echo "Start actual test"
+
+for (( i=0;i<$njob;i++ ));
+do
+	{ time ./tools/insertJob $i; } 2>${RESULTPREFIX}${i}.res &
+	pids[${i}]=$!
+done
+
+for pid in ${pids[*]}; do
+    wait $pid
+done
+
+echo "Finished!"
+

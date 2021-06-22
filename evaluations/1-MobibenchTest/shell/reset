@@ -1,0 +1,37 @@
+#!/bin/bash
+
+curDir=`pwd`
+
+nbstack_root=`cat /tmp/nbstack/nbstack_root`
+if [ -z ${nbstack_root} ]; then
+	echo "Please prepare test first."
+	exit
+fi
+
+cd ${nbstack_root}/src/nbfs
+
+./remove 2>/dev/null
+blkdiscard /dev/qblkdev 
+sleep 10
+cd ../qblk
+./makef2fs >/dev/null 2>/dev/null
+cd ../nbfs
+./install 2>/dev/null
+
+#./mountnobarrier
+./mountnbfs 2>/dev/null
+
+cd $curDir
+./run 0 $1 $2 $3 > /dev/null
+sleep 2
+echo "===========[nr_threads $3 Results of $1 $2]==================="
+printf "INSERT "
+./run 0 $1 $2 $3 | grep TIME
+sleep 2
+
+printf "UPDATE "
+./run 1 $1 $2 $3 | grep TIME
+sleep 2
+
+printf "DELETE "
+./run 2 $1 $2 $3 | grep TIME

@@ -1,0 +1,51 @@
+echo "Start comparison test"
+
+if [ $syncmode == FSYNC ]; then
+	c_bin=c_insertTest_fsync
+else
+	c_bin=c_insertTest_datasync
+fi
+
+cpuid=1
+for (( i=0;i<$njob;i++ ));
+do
+	DB=$DBPrefix$i".db"
+        hexcpu=`printf "0x%x" $cpuid`
+	if [ $CPUBind == 1 ]; then
+	   { time taskset $hexcpu ./tools/run_c_codes $c_bin $POSTSYNC $datasize $nrows 0 $DB; } 2>${CMPPREFIX}${i}.res &
+           pids1[${i}]=$!
+        else
+	   { time ./tools/run_c_codes $c_bin $POSTSYNC $datasize $nrows 0 $DB; } 2>${CMPPREFIX}${i}.res &
+           pids1[${i}]=$!
+        fi
+        cpuid=`echo $cpuid*2 | bc`
+done
+
+for pid1 in ${pids1[*]}; do
+    wait $pid1
+done
+
+echo "Done comparison test"
+echo "Start actual test"
+
+cpuid=1
+for (( i=0;i<$njob;i++ ));
+do
+	DB=$DBPrefix$i".db"
+        hexcpu=`printf "0x%x" $cpuid`
+        if [ $CPUBind == 1 ]; then
+	   { time taskset $hexcpu ./tools/run_c_codes $c_bin $POSTSYNC $datasize $nrows 1 $DB; } 2>${RESULTPREFIX}${i}.res &
+	   pids[${i}]=$!
+        else
+	   { time ./tools/run_c_codes $c_bin $POSTSYNC $datasize $nrows 1 $DB; } 2>${RESULTPREFIX}${i}.res &
+           pids[${i}]=$!
+        fi
+        cpuid=`echo $cpuid*2 | bc`
+done
+
+for pid in ${pids[*]}; do
+    wait $pid
+done
+
+echo "Finished!"
+
