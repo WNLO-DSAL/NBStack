@@ -1,0 +1,13 @@
+#!/bin/bash
+
+nrchs=$(nvme lnvm id-ns /dev/nvme0n1 | grep "^ chnls" | awk '{print $3}')
+
+nrluns=$(nvme lnvm id-ns /dev/nvme0n1 | grep "^ luns" | awk '{print $3}')
+
+endlun=`echo ${nrchs}" * "${nrluns}" - 1" | bc`
+
+echo "install qblk"
+insmod qblk.ko
+
+echo "mount qblk: 0 to "${endlun}
+nvme lnvm create -d nvme0n1 -b 0 -e ${endlun} -n qblkdev -t qblk

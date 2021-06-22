@@ -1,0 +1,2 @@
+#!/bin/bash
+mount -t nbfs /dev/qblkdev /mnt/qhw

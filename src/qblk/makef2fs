@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mkfs.f2fs /dev/qblkdev

@@ -1,0 +1,5 @@
+Module.symvers
+*.ko
+.cache.mk
+*.o
+qiog
