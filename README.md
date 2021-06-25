@@ -5,13 +5,11 @@
 In short, NBStack is a storage system that provides an atomic write interface to user applications (like F2FS).
 Internally, NBStack eliminates file system ordered writes by giving access to the flash out-of-band area and organizing the blocks of an atomic write write back as a single linked list. Therefore, NBStack can achieve higher operations per second compared with F2FS.
 
-For more information, please read our paper "Better atomic writes by exposing the flash out-of-band area to file systems" in LCTES 21.
+For more information, please refer to our paper "Better atomic writes by exposing the flash out-of-band area to file systems" in LCTES 21.
 
 Quick link:
-
-LCTES 21: [https://pldi21.sigplan.org/home/LCTES-2021](https://pldi21.sigplan.org/home/LCTES-2021)
-
-DOI link: [https://doi.org/10.1145/3461648.3463843](https://doi.org/10.1145/3461648.3463843)
+* LCTES 21: [https://pldi21.sigplan.org/home/LCTES-2021](https://pldi21.sigplan.org/home/LCTES-2021)
+* DOI link: [https://doi.org/10.1145/3461648.3463843](https://doi.org/10.1145/3461648.3463843)
 
 ## Run NBStack
 
