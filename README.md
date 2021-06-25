@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-Use FEMU to emulate an Open-Channel SSD for your QEMU virtual machine. We recommend FEMU commitID [783d4fb4ce46e0e10ef83d48046566cbba1e6b6d](https://github.com/ucare-uchicago/FEMU/commit/783d4fb4ce46e0e10ef83d48046566cbba1e6b6d).
+Use FEMU to emulate an Open-Channel SSD for your QEMU virtual machine. We recommend FEMU commitID [464d8aab1810a738cd22187bd9a8ffd6a22c7683](https://github.com/ucare-uchicago/FEMU/commit/464d8aab1810a738cd22187bd9a8ffd6a22c7683).
 
 ### Linux Kernel version
 
