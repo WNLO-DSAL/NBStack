@@ -2,4 +2,4 @@
 
 cd tools/c
 make clean
-make
+make -j2
