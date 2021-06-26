@@ -16,19 +16,26 @@ In case of errors, try upgrading gcc.
 
 ## Usage
 
-Config:
+**Config:**
 
 `vim config`
 
-Run QBLK and NBFS
+Notes on config:
+
+```
+Users should have sqlite3 installed in the system. The `SQLITE` parameter in the config should point to the sqlite3 binary.
+The binary is used for creating the test database.
+```
+
+**Run QBLK and NBFS**
 
 `./WarmupAndInstall.sh`
 
-Create databases and tables
+**Create databases and tables**
 
 `./prepareTest`
 
-Run test
+**Run test**
 
 `./runTest`
 
