@@ -23,7 +23,8 @@ In case of errors, try upgrading gcc.
 Notes on config:
 
 ```
-Users should have sqlite3 installed in the system. The `SQLITE` parameter in the config should point to the sqlite3 binary.
+Users should have sqlite3 installed in the system.
+The `SQLITE` parameter in the config should point to the sqlite3 binary.
 The binary is used for creating the test database.
 ```
 
